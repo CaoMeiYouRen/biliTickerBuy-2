@@ -139,7 +139,9 @@ class NotifierBase(ABC):
                 if attempt < attempts:
                     wait = backoff * (2 ** (attempt - 1))
                     time.sleep(wait)
-        loguru.logger.error(f"通知同步发送最终失败，已穷尽 {attempts} 次重试: {last_error}")
+        loguru.logger.error(
+            f"通知同步发送最终失败，已穷尽 {attempts} 次重试: {last_error}"
+        )
         return False
 
 

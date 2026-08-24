@@ -46,9 +46,7 @@ _COMMON_FORMAT_DEFAULTS = (
     ("result_type", "json"),
     ("datatype", "json"),
 )
-_COMMON_PROTOCOL_DEFAULTS = (
-    ("protocol", (("http", "http"), ("socks5", "socks5"))),
-)
+_COMMON_PROTOCOL_DEFAULTS = (("protocol", (("http", "http"), ("socks5", "socks5"))),)
 
 _PROFILES: tuple[ProxyApiProfile, ...] = (
     ProxyApiProfile(
@@ -231,7 +229,9 @@ _SENSITIVE_QUERY_KEYS = {
     "username",
     "vkey",
 }
-_HOST_PATTERN = r"(?:\d{1,3}(?:\.\d{1,3}){3}|[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+|\[[0-9A-Fa-f:.]+\])"
+_HOST_PATTERN = (
+    r"(?:\d{1,3}(?:\.\d{1,3}){3}|[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+|\[[0-9A-Fa-f:.]+\])"
+)
 _URL_CANDIDATE_RE = re.compile(r"[a-zA-Z][a-zA-Z0-9+.-]*://[^\s,;|]+")
 _PROXY_CANDIDATE_RE = re.compile(
     rf"(?:[^\s:@,;|]+(?::[^\s@,;|]*)?@)?{_HOST_PATTERN}:\d{{2,5}}"
@@ -572,7 +572,9 @@ def _extract_proxy_parts(
         if host is not None and port is not None:
             username = _get_any_key(item, *_USERNAME_KEYS) or ""
             password = _get_any_key(item, *_PASSWORD_KEYS) or ""
-            scheme = _normalize_proxy_scheme(_get_any_key(item, *_SCHEME_KEYS), protocol)
+            scheme = _normalize_proxy_scheme(
+                _get_any_key(item, *_SCHEME_KEYS), protocol
+            )
             return (
                 scheme,
                 str(host).strip().strip("[]"),
@@ -652,7 +654,9 @@ def _raise_if_provider_failure(payload: Any, profile: ProxyApiProfile) -> None:
     if not code_found:
         return
 
-    success_codes = _SUCCESS_CODES | {str(code).strip().lower() for code in profile.success_codes}
+    success_codes = _SUCCESS_CODES | {
+        str(code).strip().lower() for code in profile.success_codes
+    }
     code_text = str(code_value).strip().lower()
     if code_text not in success_codes:
         raise ProxyApiError(f"代理 API 返回失败: {_message_from_payload(payload)}")
@@ -764,7 +768,10 @@ def _collect_from_text(
         candidates = [match.group(0) for match in url_matches]
         for match in _PROXY_CANDIDATE_RE.finditer(line):
             start, end = match.span()
-            if any(span_start <= start and end <= span_end for span_start, span_end in url_spans):
+            if any(
+                span_start <= start and end <= span_end
+                for span_start, span_end in url_spans
+            ):
                 continue
             candidates.append(match.group(0))
         if not candidates:

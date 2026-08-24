@@ -112,8 +112,16 @@ def _ticket_page_state_is_ready(
 
     data = payload.get("data") if isinstance(payload, dict) else None
     if not isinstance(data, dict):
-        code = payload.get("code", payload.get("errno", "unknown")) if isinstance(payload, dict) else "unknown"
-        message = payload.get("message", payload.get("msg", "")) if isinstance(payload, dict) else ""
+        code = (
+            payload.get("code", payload.get("errno", "unknown"))
+            if isinstance(payload, dict)
+            else "unknown"
+        )
+        message = (
+            payload.get("message", payload.get("msg", ""))
+            if isinstance(payload, dict)
+            else ""
+        )
         return TicketPageAvailability(
             url=page_url,
             ready=False,

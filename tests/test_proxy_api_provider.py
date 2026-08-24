@@ -73,9 +73,7 @@ def test_build_proxy_api_request_adds_profile_specific_missing_params():
     )
 
     assert request.profile.name == "xiaoxiang"
-    assert request.url == (
-        "https://api.xiaoxiangdaili.com/ip/get?cnt=6&wt=json"
-    )
+    assert request.url == ("https://api.xiaoxiangdaili.com/ip/get?cnt=6&wt=json")
 
 
 def test_build_proxy_api_request_does_not_add_params_for_unknown_provider():
@@ -407,9 +405,10 @@ def test_fetch_proxy_api_result_can_replace_proxy_manager_pool(monkeypatch):
 
 
 def test_mask_proxy_api_url_redacts_sensitive_query_values():
-    assert mask_proxy_api_url(
-        "https://example.com/get?key=&token=&num=2&signature="
-    ) == "https://example.com/get?key=***&token=***&num=2&signature=***"
+    assert (
+        mask_proxy_api_url("https://example.com/get?key=&token=&num=2&signature=")
+        == "https://example.com/get?key=***&token=***&num=2&signature=***"
+    )
 
 
 def test_parse_youdaili_failure_response_raises():

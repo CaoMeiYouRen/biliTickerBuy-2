@@ -93,11 +93,20 @@ def _page_gate_result_fields(result: Any) -> tuple[bool, str]:
     """Keep the countdown code independent from the page-check implementation."""
 
     if isinstance(result, bool):
-        return result, "购票页校验：检测到「立即购票」。" if result else "购票页校验：尚未检测到「立即购票」。"
+        return (
+            result,
+            "购票页校验：检测到「立即购票」。"
+            if result
+            else "购票页校验：尚未检测到「立即购票」。",
+        )
     ready = bool(getattr(result, "ready", False))
     message = getattr(result, "message", None)
     if not isinstance(message, str) or not message:
-        message = "购票页校验：检测到「立即购票」。" if ready else "购票页校验：尚未检测到「立即购票」。"
+        message = (
+            "购票页校验：检测到「立即购票」。"
+            if ready
+            else "购票页校验：尚未检测到「立即购票」。"
+        )
     return ready, message
 
 
@@ -262,9 +271,7 @@ def wait_until_start(
         ):
             page_next_check_at = time.perf_counter() + page_poll_interval_seconds
             try:
-                page_ready, page_message = _page_gate_result_fields(
-                    page_status_check()
-                )
+                page_ready, page_message = _page_gate_result_fields(page_status_check())
             except Exception as exc:
                 page_message = f"购票页校验请求失败，继续等待：{exc}"
             yield {

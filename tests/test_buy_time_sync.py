@@ -106,6 +106,4 @@ def test_wait_until_start_reports_warmup_failure_without_raising(monkeypatch):
     )
 
     messages = [event.get("message") for event in events]
-    assert any(
-        "failed to fetch project detail" in str(message) for message in messages
-    )
+    assert any("failed to fetch project detail" in str(message) for message in messages)

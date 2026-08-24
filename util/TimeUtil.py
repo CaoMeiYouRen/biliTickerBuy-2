@@ -54,7 +54,7 @@ class TimeUtil:
     # NTP服务器默认来自DEFAULT_NTP_SERVERS, 可根据实际情况修改
     def __init__(
         self,
-        _ntp_server = None,
+        _ntp_server=None,
         *,
         ntp_servers: list[str] | tuple[str, ...] | None = None,
         bili_time_url: str = "https://show.bilibili.com/api/ticket/project/listV2",
@@ -62,11 +62,7 @@ class TimeUtil:
         self.ntp_servers = list(
             ntp_servers
             if ntp_servers is not None
-            else (
-                DEFAULT_NTP_SERVERS
-                if _ntp_server is None
-                else (_ntp_server,)
-            )
+            else (DEFAULT_NTP_SERVERS if _ntp_server is None else (_ntp_server,))
         )
         self.ntp_server = self.ntp_servers[0]
         self.bili_time_url = bili_time_url

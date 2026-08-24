@@ -83,9 +83,7 @@ def test_btb_ntfy_url_now_effective_in_buy(monkeypatch):
 
     # 设置后 buy 装配链应读到该值
     monkeypatch.setenv("BTB_NTFY_URL", "https://ntfy.sh/mytopic")
-    assert (
-        _assemble(["buy"]).notifier_config.ntfy_url == "https://ntfy.sh/mytopic"
-    )
+    assert _assemble(["buy"]).notifier_config.ntfy_url == "https://ntfy.sh/mytopic"
 
 
 def test_bool_env_applies(monkeypatch):

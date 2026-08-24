@@ -84,12 +84,12 @@ def set_main_request(request):
     global main_request
     main_request = request
 
+
 if os.environ.get("BTB_NTP_SERVERS"):
     ntp_servers = os.environ.get("BTB_NTP_SERVERS").split(",")
     time_service = TimeUtil(ntp_servers=ntp_servers)
 else:
     time_service = TimeUtil()
-
 
 
 if os.environ.get("BTB_SKIP_INITIAL_TIME_SYNC") == "1":

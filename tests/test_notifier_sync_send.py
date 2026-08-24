@@ -134,7 +134,9 @@ def test_serverchan_turbo_has_timeout(monkeypatch):
     import util.notifer.ServerChanUtil as mod
 
     cap = _capture_post(monkeypatch, mod)
-    ServerChanTurboNotifier(token="tk", title="t", content="c").send_message("标题", "消息")
+    ServerChanTurboNotifier(token="tk", title="t", content="c").send_message(
+        "标题", "消息"
+    )
     assert cap["kwargs"].get("timeout") == DEFAULT_HTTP_TIMEOUT
 
 
@@ -175,6 +177,7 @@ def test_non_2xx_raises_and_triggers_retry(monkeypatch):
 
 
 # ---------- 可配置参数（timeout/retries/backoff）覆盖 ----------
+
 
 def test_resolve_timeout_from_config():
     """_resolve_timeout 应从 config 的 notify_connect/read_timeout 组成 tuple。"""
